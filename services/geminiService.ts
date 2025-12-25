@@ -20,7 +20,6 @@ export const generateMathResponse = async (
   activeAnalyses: AnalysisObject[]
 ): Promise<AIResponse> => {
   
-  // Always use a named parameter for the API key as per @google/genai guidelines.
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
   
   const findObj = (id: string | number) => activeAnalyses.find(a => String(a.id) === String(id));
@@ -130,9 +129,8 @@ export const generateMathResponse = async (
   `;
 
   try {
-    // Correctly calling generateContent with the model name 'gemini-3-flash-preview' and prompt.
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.0-flash-exp',
       contents: prompt,
       config: {
         systemInstruction: systemInstruction,
@@ -157,7 +155,6 @@ export const generateMathResponse = async (
       }
     });
 
-    // Access the text property directly from GenerateContentResponse as per guidelines.
     let result = response.text;
     if (!result) throw new Error("No response from AI");
 
