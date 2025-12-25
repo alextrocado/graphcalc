@@ -20,7 +20,9 @@ export const generateMathResponse = async (
   activeAnalyses: AnalysisObject[]
 ): Promise<AIResponse> => {
   
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  // Tem de ser EXATAMENTE este nome, igual ao da imagem do Vercel
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
+  
   
   const findObj = (id: string | number) => activeAnalyses.find(a => String(a.id) === String(id));
 
