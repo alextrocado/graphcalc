@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Calc</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- MathLive for Rich Math Editing -->
+    <script src="//unpkg.com/mathlive"></script>
+
+    <!-- KaTeX for Math Rendering (Kept for static labels only) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    
+    <!-- MathJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.0/math.js"></script>
+    
+    <!-- Nerdamer for Symbolic Math -->
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/nerdamer.core.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Algebra.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Calculus.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nerdamer@latest/Solve.js"></script>
+
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .katex { font-size: 1.1em; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* MathField Customization */
+        math-field {
+            font-size: 1.1rem;
+            background: transparent;
+            border: none;
+            outline: none;
+            width: 100%;
+            color: #334155;
+            --caret-color: #007888;
+            --selection-background-color: #b2dfdb;
+            --selection-color: #004d40;
+        }
+        math-field::part(content) {
+             padding: 4px 0;
+        }
+        
+        /* COMPLETELY HIDE the internal virtual keyboard toggle and menu button */
+        math-field::part(virtual-keyboard-toggle),
+        math-field::part(menu-toggle) {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* Customize the native virtual keyboard size and appearance */
+        :root {
+            --keyboard-background: #f8fafc;
+            --keycap-background: #ffffff;
+            --keycap-background-active: #e2e8f0;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
