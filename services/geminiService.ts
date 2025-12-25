@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type, SchemaType } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai"; // Removido SchemaType
 import { MathFunction, MathParam, ViewPort, AnalysisObject } from "../types";
 
 interface AICommand {
@@ -20,7 +20,6 @@ export const generateMathResponse = async (
   activeAnalyses: AnalysisObject[]
 ): Promise<AIResponse> => {
   
-  // 1. Chave de API (Garante que corrigiste o espaço no Vercel!)
   const apiKey = import.meta.env.VITE_GEMINI_API_KEY || "";
   
   if (!apiKey) {
@@ -30,7 +29,7 @@ export const generateMathResponse = async (
   
   const ai = new GoogleGenAI({ apiKey });
   
-  // --- Lógica de Construção do Contexto (Mantida igual) ---
+  // --- Lógica de Construção do Contexto ---
   const findObj = (id: string | number) => activeAnalyses.find(a => String(a.id) === String(id));
 
   const constructions = activeAnalyses.map(a => {
@@ -98,7 +97,6 @@ export const generateMathResponse = async (
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.0-flash-exp',
-      // CORREÇÃO 1: Formato correto do contents (Array)
       contents: [
         {
           role: "user",
@@ -109,17 +107,17 @@ export const generateMathResponse = async (
         systemInstruction: systemInstruction,
         responseMimeType: "application/json",
         responseSchema: {
-          type: SchemaType.OBJECT,
+          type: Type.OBJECT, // ALTERADO DE SchemaType PARA Type
           properties: {
-            text: { type: SchemaType.STRING, description: "Message to the user." },
+            text: { type: Type.STRING, description: "Message to the user." }, // ALTERADO
             commands: {
-              type: SchemaType.ARRAY,
+              type: Type.ARRAY, // ALTERADO
               items: {
-                type: SchemaType.OBJECT,
+                type: Type.OBJECT, // ALTERADO
                 properties: {
-                  action: { type: SchemaType.STRING, enum: ["add_function", "set_param", "remove_function", "remove_param"] },
-                  argument: { type: SchemaType.STRING },
-                  value: { type: SchemaType.NUMBER, nullable: true }
+                  action: { type: Type.STRING, enum: ["add_function", "set_param", "remove_function", "remove_param"] }, // ALTERADO
+                  argument: { type: Type.STRING }, // ALTERADO
+                  value: { type: Type.NUMBER, nullable: true } // ALTERADO
                 },
                 required: ["action", "argument"]
               }
@@ -132,7 +130,6 @@ export const generateMathResponse = async (
 
     if (!response) throw new Error("No response from AI");
 
-    // CORREÇÃO 2: .text() é uma função neste SDK
     const resultText = typeof response.text === 'function' ? response.text() : response.text;
 
     if (!resultText) throw new Error("Empty text response");
