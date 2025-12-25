@@ -133,7 +133,7 @@ export const generateMathResponse = async (
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.0-flash-exp',
-      contents: prompt,
+      contents: [{ role: 'user', parts: [{ text: prompt }] }]
       config: {
         systemInstruction: systemInstruction,
         responseMimeType: "application/json",
